@@ -1,0 +1,33 @@
+# 0005+0203oa.ast3 - ASCFIT script to fit full spectrum
+# 
+# STAGE thre
+# 
+# Observed wavelength range 1590.300 to  2311.720 A
+# Redshift =  0.23400     Galactic NH =  3.00 10^20 cm^-2
+# 
+# 
+pwd
+# 
+# 
+use '/data/kf2/fos_data/0005+0203oa/ASCFIT/0005+0203oa_S2.save'
+statistic chi gehrels
+method powell; powell.iterations=100; powell.eps=0.001
+# 
+# 
+# Absorption lines from FINDSL
+gauss1d[a1](  1.6:  1.0:  2.6, 2167.2: 2164.2: 2170.2,-0.01:-100.0:0)
+gauss1d[a2](  3.3:  1.0:  4.3, 2169.6: 2166.6: 2172.6,-0.01:-100.0:0)
+gauss1d[a3](  1.0:  1.0:  2.0, 2171.9: 2168.9: 2174.9,-0.01:-100.0:0)
+gauss1d[a4](  1.6:  1.0:  2.6, 2214.8: 2211.8: 2217.8,-0.01:-100.0:0)
+gauss1d[a5](  5.3:  1.0:  6.3, 2219.0: 2216.0: 2222.0,-0.01:-100.0:0)
+gauss1d[a6](  5.1:  1.0:  6.1, 2225.9: 2222.9: 2228.9,-0.01:-100.0:0)
+gauss1d[a7](  0.0:  1.0:  1.0, 2251.6: 2248.6: 2254.6,-0.01:-100.0:0)
+gauss1d[a8](  9.3:  1.0: 10.3, 2261.4: 2258.4: 2264.4,-0.01:-100.0:0)
+# 
+# Lyman Beta region not in spectrum
+# Al III+Si III+C III region (1910 A) not in spectrum
+# 
+source 1 =
+source 2 =
+SAVE all '0005+0203oa_S3.save'
+quit

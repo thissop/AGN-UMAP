@@ -1,0 +1,119 @@
+# 0005+0203oa.ast1 - ASCFIT script to fit full spectrum
+# 
+# STAGE one 
+# 
+# Observed wavelength range 1590.300 to  2311.720 A
+# Redshift =  0.23400     Galactic NH =  3.00 10^20 cm^-2
+# 
+# 
+pwd
+# 
+# 
+use '/data/kf2/fos_data/ASCSAVE/0005+0203oa.FESAVE'
+statistic chi gehrels
+method powell; powell.iterations=100; powell.eps=0.001
+# 
+# Lyman Beta region not in spectrum
+# Lyman Alpha region not in spectrum
+# 
+# Si IV / O IV  REGION
+# Minimum FWHM =   1.079 Angstroms ( =   231.1 km/s)
+# Si IV/O IV blend
+gauss1d[sio4](  14.222:   1.422: 213.333, 1727.6: 1707.6: 1747.6,  0.345:0.0:   0.6894)
+# 
+# Si IV/O IV blend first
+source 1 = 1e-14*(umdr*(con1+sio4))
+freeze con1 
+freeze umdr sio4
+ignore all
+notice filter  1665.9: 1789.3
+ignore 1 filter 1668.8:1672.8
+thaw sio4.1 sio4.3; fit; freeze sio4
+# 
+# WRITE SOURCE FUNCTIONS TO .src files
+# 
+notice all
+WRITE source '0005+0203oa.full2.src' ascii
+WRITE residuals '0005+0203oa.full2.res' ascii
+source 1 = umdr*sio4
+WRITE source '0005+0203oa.sio4.src' ascii
+# 
+# C IV REGION
+# C IV region S/N =  3.41 bins =  413
+# Minimum FWHM =   1.076 Angstroms ( =   208.2 km/s)
+# C IV Broad
+gauss1d[c4b](  39.340:   3.934: 236.038, 1911.5: 1881.5: 1941.5,  0.174:0.0:   1.0455)
+# C IV Narrow
+gauss1d[c4n](   2.754:   1.076:  39.340, 1911.5: 1891.5: 1931.5,  0.436:0.0:   1.7426)
+# He II 1640
+gauss1d[he2](   8.330:   1.666:  83.301, 2023.8: 2003.8: 2043.8,  0.147:0.0:   0.3664)
+# 
+# C IV Broad then Narrow
+source 1 = 1e-14*(umdr*(con1+c4b+c4n+he2))
+freeze umdr c4n he2
+freeze c4b
+freeze con1 
+ignore all
+notice filter  1832.5: 2122.5
+ignore 1 filter 1852.7:1856.7
+ignore 1 filter 1860.8:1864.8
+thaw c4b.1; fit; thaw c4b.3; fit; freeze c4b
+thaw c4n.1; fit; thaw c4n.3; fit; freeze c4n
+# 
+# He II 1640
+ignore all
+notice filter  1986.7: 2097.8
+freeze umdr c4n he2
+freeze c4b
+freeze con1 
+thaw he2.1; fit; thaw he2.3; fit; freeze he2
+# 
+# C IV region (inc. Si IV / O IV)
+ignore all
+notice filter  1665.9: 2122.5
+ignore 1 filter 1668.8:1672.8
+ignore 1 filter 1852.7:1856.7
+ignore 1 filter 1860.8:1864.8
+source 1 = 1e-14*(umdr*(con1+sio4+c4b+c4n+he2))
+freeze sio4
+freeze umdr c4n he2
+freeze c4b
+freeze con1 
+thaw c4b.1 c4b.3; fit; freeze c4b
+thaw c4n.1 c4n.3; fit; freeze c4n
+thaw he2.1 he2.3; fit; freeze he2
+thaw sio4.1 sio4.3; fit
+thaw c4b.1 c4b.3
+thaw c4n.1 c4n.3 he2.1 he2.3; fit; freeze c4n he2
+freeze sio4
+freeze c4b
+# 
+# WRITE SOURCE FUNCTIONS TO .src files
+# 
+notice all
+WRITE source '0005+0203oa.full2.src' ascii
+WRITE residuals '0005+0203oa.full2.res' ascii
+source 1 = umdr*c4b
+WRITE source '0005+0203oa.c4b.src' ascii
+source 1 = umdr*c4n
+WRITE source '0005+0203oa.c4n.src' ascii
+source 1 = umdr*he2
+WRITE source '0005+0203oa.he2.src' ascii
+source 1 = umdr*sio4
+WRITE source '0005+0203oa.sio4.src' ascii
+# Al III+Si III+C III region (1910 A) not in spectrum
+# Mg II region (2800 A) not in spectrum
+# Ne V region (3426 A) not in spectrum
+# [O II] region (3728 A) not in spectrum
+# [Ne III] region (3869 A) not in spectrum
+# H delta region (4101 A) not in spectrum
+# H gamma and [O III] region (4340 A) not in spectrum
+# He II region (4686 A) not in spectrum
+# H beta region not in spectrum
+# He I region (5876 A) not in spectrum
+# H alpha region not in spectrum
+# 
+source 1 =
+source 2 =
+SAVE all '0005+0203oa_S1.save'
+quit

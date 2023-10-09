@@ -1,0 +1,34 @@
+Title: Emission Line Properties of Agn from a post-Costar Fos HST Spectral Atlas
+Authors: Kuraszkiewicz J.K., Green P.J., Crenshaw D.M., Dunn J., Forster K., 
+         Vestergaard M., Aldcroft T.L. 
+Table: List of objects and spectra
+================================================================================
+Byte-by-byte Description of file: datafile1.txt
+--------------------------------------------------------------------------------
+   Bytes Format Units     Label     Explanations
+--------------------------------------------------------------------------------
+   1-  9  A9    ---       Name      Object designation (1)
+      10  A1    ---     f_Name      [*] See note (2)
+  12- 25  A14   ---       CName     Common name
+  27- 31  A5    ---       Type      AGN type (3)
+  33- 37  F5.3  ---       z         Redshift
+  40- 44  F5.2  10+20/cm2 NH        Neutral hydrogen column density
+  46- 56  A11   ---       NSpect    Spectrum name (4)
+--------------------------------------------------------------------------------
+Note (1):Based on the equinox J2000 position (in standard IAU format 
+         consisting of HHMM+/-DDMM).
+Note (2): We include this BL Lac object as it shows weak emission lines.
+Note (3): AGN type:
+       Q = QSO;
+     Sy1 = Seyfert 1;
+     Sy2 = Seyfert 2;
+    NLS1 = Narrow Line Seyfert 1;
+    NLRG = Narrow Line Radio Galaxy.
+Note (4): Based on the equinox J2000 position (in standard IAU format
+          consisting of HHMM+/-DDMM). In addition to this, a two letter
+          designation is used for the spectra indicating that the spectra are
+          from a post-COSTAR observation (o) and whether there is
+          more than one spectrum of the same object (a-z). A capital
+          letter at the end of the name indicates that the object is
+          a gravitational lens and that separate spectra of each
+          lensed component were observed and analyzed.

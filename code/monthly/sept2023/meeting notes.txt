@@ -1,0 +1,17 @@
+Fitting code from joan to put everything on same redshift
+
+She already has all the data available 
+
+Normalize spectrum and have more sensitive 
+
+Compare subclasses in her table with ours 
+
+Compare if we have di
+
+Data imputation with her model since we don’t have data in those ranges 
+
+Red shift correction 
+Missing data imputation (in future on bigger data use simpler model)
+Apply algo as before 
+
+He’ll contact Joann 

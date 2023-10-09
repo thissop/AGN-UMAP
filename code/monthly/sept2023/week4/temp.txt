@@ -1,0 +1,62 @@
+XTENSION= 'IMAGE   '           
+ IMAGE extension                                BITPIX  =                   16 
+ number of bits per data pixel                  NAXIS   =                    2 
+ number of data axes                            NAXIS1  =                   40 
+ length of data axis 1                          NAXIS2  =                   40 
+ length of data axis 2                          PCOUNT  =                    0 
+ required keyword; must = 0                     GCOUNT  =                    1 
+ required keyword; must = 1                     EXTNAME = 'SCI     '           
+ extension name                                 EXTVER  =                    1 
+ extension version number                       INHERIT =                    T 
+ inherit the primary header                     ROOTNAME= 'U2EQ0201T'          
+ rootname of the observation set                EXPNAME = 'U2EQ0201T'          
+ 9 character exposure identifier                CRVAL1  =        215.597167517 
+ right ascension of reference pixel (deg)       CRVAL2  =       -12.7376058132 
+ declination of reference pixel (deg)           CRPIX1  =               210.25 
+ x-coordinate of reference pixel                CRPIX2  =                212.5 
+ y-coordinate of reference pixel                CD1_1   =          2.33019E-05 
+ partial of the right ascension w.r.t. x        CD1_2   =          9.85029E-06 
+ partial of the right ascension w.r.t. y        CD2_1   =          9.85462E-06 
+ partial of the declination w.r.t. x            CD2_2   =         -2.32916E-05 
+ partial of the declination w.r.t. y            DATAMIN =                   0. 
+ minimum value of the data                      DATAMAX =                   0. 
+ maximum value of the data                      MIR_REVR=                    T 
+ is the image mirror reversed?                  ORIENTAT=              157.076 
+ orientation of the image (deg)                 FILLCNT =                    0 
+ number of segments containing fill             ERRCNT  =                    0 
+ number of segments containing errors           FPKTTIME=         49491.654167 
+ time of the first packet (Modified Julian Date)LPKTTIME=          49491.65422 
+ time of the last packet (Modified Julian Date) CTYPE1  = 'UNITLESS'           
+ first coordinate type                          CTYPE2  = 'LINE    '           
+ second coordinate type                         DETECTOR=                    1 
+ CCD detector: PC 1, WFC 2-4                    DEZERO  =                   0. 
+ mean bias level from EED extended register     BIASEVEN=                   0. 
+ bias level for even-numbered columns           BIASODD =                   0. 
+ bias level for odd-numbered columns            GOODMIN =                   0. 
+ minimum value of the "good" pixels             GOODMAX =                   0. 
+ maximum value of the "good" pixels             DATAMEAN=                   0. 
+ mean value of the "good" pixels                GPIXELS =                    0 
+ number of "good" pixels (DQF = 0)              SOFTERRS=                    0 
+ number of "soft error" pixels (DQF = 1)        CALIBDEF=                    0 
+ number of "calibration defect" pixels (DQF = 2)STATICD =                    0 
+ number of "static defect" pixels (DQF = 4)     ATODSAT =                    0 
+ number of "AtoD saturated" pixels (DQF = 8)    DATALOST=                    0 
+ number of "data lost" pixels (DQF = 16)        BADPIXEL=                    0 
+ number of "generic bad" pixels (DQF = 32)      OVERLAP =                    0 
+ number of "image overlap" pixels (DQF = 64)    PHOTMODE= '        '           
+ Photometry mode                                PHOTFLAM=                   0. 
+ Inverse Sensitivity                            PHOTZPT =                   0. 
+ Zero point                                     PHOTPLAM=                   0. 
+ Pivot wavelength                               PHOTBW  =                   0. 
+ RMS bandwidth of the filter                    MEDIAN  =                 312. 
+ middle data value when good qual pixels sorted MEDSHADO=                 314. 
+ median pixel value in shadow of pyramid edge   HISTWIDE=                   1. 
+ width of the histogram                         SKEWNESS=            -0.003205 
+ skewness of the histogram                      MEANC10 =               313.16 
+ mean of a 10x10 region at center of chip       MEANC25 =             313.2493 
+ mean of a 25x25 region at center of chip       MEANC50 =             313.5349 
+ mean of a 50x50 region at center of chip       MEANC100=             313.4404 
+ mean of a 100x100 region at center of chip     MEANC200=             313.3406 
+ mean of a 200x200 region at center of chip     MEANC300=             313.3636 
+ mean of a 300x300 region at center of chip     BACKGRND=                 316. 
+ estimated background level                     END                               
