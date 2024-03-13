@@ -79,4 +79,3 @@ data_dir = 'data/190SDSSspec'
 for data_file in os.listdir(data_dir): 
     if data_file.split('.')[-1] == 'fits':
         prep_data(data_file=f'{data_dir}/{data_file}')
-

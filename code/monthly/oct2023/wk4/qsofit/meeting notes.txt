@@ -1,0 +1,21 @@
+tie the hbeta line. 
+
+two regions where broad lines form (in the accretion disk or in the wind of the disk) and seaprate region (where UV lines come from like carbon 4 and lyman alpha from in gas that is not that thick is where the hb-in2 are formed) and the third region (narrow line region, further out...clustering will likely come from the parameters of these regions?)
+
+when people did PCA analsyis, they thought primary eigenvector was accretion rate and mass (they couldn't separate the two)
+
+^^ is PCA a better algorithm to use because we can associate with eigenvectors? 
+
+the only ml papers she's seen on quasars is that they're looking for broad absorption line quasars or classifying objects. 
+
+similiar qsos they were looking for were really blue ones with barely visible emission lines (people weren't really looking for these)
+
+something to remember is that the interesting sources outside the clusters. 
+
+types 1s: into engine, type 2: into torus (thought they found type 2s, but then they started looking at line ratios...which are type 1, so they called them narrow line seyferts (h beta is narrow so mass has to be small, and arthur edington ratio needs to be high))
+
+markus has been trying to write down a complete model to capture what joanna was saying. 
+
+need to grind on this project this weekend (math, code, read, russian)
+
+maybe we will accidentally find

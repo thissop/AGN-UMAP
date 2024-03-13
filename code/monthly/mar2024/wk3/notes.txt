@@ -1,0 +1,4 @@
+input: 950 points for spectrum
+
+output: 
+
