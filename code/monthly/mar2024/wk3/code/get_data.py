@@ -19,6 +19,7 @@ for spec_csv in os.listdir(spec_dir):
     pds_file = f'/Users/yaroslav/Documents/2. work/Research/GitHub/MAXI-J1535/final-push/data/sources/MAXI_J1535-571/regression/qpo/jspipe_qpo/{obsid}/js_ni{obsid}_0mpu7_silver_GTI{gti}-bin.pds'
     pds_hdul = fits.open(pds_file)
     pds_data = np.array(pds_hdul[1].data)[50:200]
+    print(pds_data[0])
 
     idx = [i[0] for i in pds_data]
     power = [i[1] for i in pds_data]
