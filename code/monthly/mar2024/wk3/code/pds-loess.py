@@ -37,8 +37,9 @@ for spec_csv in os.listdir(spec_dir):
 
     mask = np.logical_and(channel_hz>1, channel_hz<=10)
 
-    channel_hz = channel_hz[mask] # hz mid point for pds 
-    rms_squared = rms_squared[mask] # data are in rms^2/channel width 
+    channel_hz = channel_hz[mask]
+    rms_squared = rms_squared[mask]
+
 
     def make_pds_spec_plot(): 
 
