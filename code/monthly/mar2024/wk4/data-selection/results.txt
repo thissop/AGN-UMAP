@@ -1,0 +1,2 @@
+,im_path,sorted_in_folder
+0,/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/code/monthly/mar2024/wk4/data-selection/images/SDE__32_881122973656154_TIC_190885165_m__LombScargle-n=2_s__0.png,/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/code/monthly/mar2024/wk4/data-selection/images/No QPO/SDE__32_881122973656154_TIC_190885165_m__LombScargle-n=2_s__0.png
