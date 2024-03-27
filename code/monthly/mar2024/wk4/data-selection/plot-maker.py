@@ -1,13 +1,14 @@
 from astropy.io import fits
 import matplotlib.pyplot as plt 
 import numpy as np
-import pandas as pd
 import os 
 import numpy as np
 from scipy.signal import savgol_filter
 import statsmodels.api as sm
 lowess = sm.nonparametric.lowess
 from tqdm import tqdm 
+
+import smplotlib
 
 #/Users/yaroslav/Downloads/thaddaeus_delivery/2200500201/jspipe/js_ni2200500201_0mpu7_goddard_GTI0.jsgrp
 #/Users/yaroslav/Downloads/thaddaeus_delivery/2200500201/jspipe/js_ni2200500201_0mpu7_silver_GTI0-bin.pds
@@ -60,15 +61,19 @@ for obsid in tqdm(os.listdir(spec_dir)):
                 energy_mask = np.logical_and(energy_means>0.5, energy_means<10)
         
                 fig, axs  = plt.subplots(1, 2, figsize=(8, 4))
-                axs[0].scatter(energy_means[energy_mask], energy_counts[energy_mask])
+                axs[0].scatter(energy_means[energy_mask], energy_counts[energy_mask], s=1)
                 #axs[0].plot(energy_means[energy_mask], savgol_filter(energy_counts[energy_mask], 25, 3, mode='nearest'), color='red')
                 axs[0].set(xlabel='Channel', ylabel='Counts', title='NICER Energy Spectrum', xscale='log')
 
-                axs[1].scatter(channel_hz, rms_squared)
+                axs[1].scatter(channel_hz, rms_squared, s=1)
                 axs[1].plot(channel_hz, savgol_filter(rms_squared, 4, 3, mode='nearest'), color='red')
                 #lowess_fit = lowess(rms_squared, channel_hz, frac=1/10).T
                 #axs[1].plot(lowess_fit[0], lowess_fit[1], color='green')
-                axs[1].set(label='Index', ylabel='Power', title='Power Density Spectrum')
+                axs[1].set(label='Index', ylabel='Power', xlabel='Frequency (Hz)', title='Power Density Spectrum')
+
+                fig.tight_layout()
+
+                plt.show()
 
                 plt.savefig(f'/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/code/monthly/mar2024/wk4/data-selection/images/{obsid}-{gti}.png', dpi=200)
                 plt.close()
