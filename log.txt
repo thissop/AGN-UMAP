@@ -1,0 +1,3 @@
+
+SIGHUP received.
+Redirecting output to ‘wget-log.1’.

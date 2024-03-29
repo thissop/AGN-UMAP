@@ -12,7 +12,7 @@ df = pd.read_csv('/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/dat
 
 plates, mjds, fiberids = df['plate'], df['mjd'], df['fiberid']
 
-ids = ((plates[i], mjds[i], fiberids[i]) for i in range(0,1000))
+ids = ((plates[i], mjds[i], fiberids[i]) for i in range(0,5000))
 
 spec, w, z, norm, zerr = SDSS.make_batch(data_path, ids)
 
