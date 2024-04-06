@@ -2,7 +2,9 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 import numpy as np
 
-plt.style.use('/Users/yaroslav/Documents/2. work/Research/GitHub/SummerEconProject/pre-project/nus-evaluation/code/style.mplstyle')
+import smplotlib
+
+#plt.style.use('/Users/yaroslav/Documents/2. work/Research/GitHub/SummerEconProject/pre-project/nus-evaluation/code/style.mplstyle')
 
 df1 = pd.read_csv('/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/code/monthly/feb2024/wk3/spender.desi-edr.full-bgs-objects-logP.txt')
 
@@ -24,7 +26,7 @@ plt.close()
 
 df2 = pd.read_csv('/Users/yaroslav/Documents/2. work/Research/GitHub/AGN-UMAP/code/monthly/feb2024/wk3/spender.sdss.paperII.logP.txt')
 
-fig, axs = plt.subplots(1, 2, figsize=(10,4))
+fig, axs = plt.subplots(1, 2, figsize=(10,6))
 
 df2 = df2.sort_values(by='-logP', ascending=False)
 
@@ -39,17 +41,10 @@ axs[0].scatter(range(0, len(df2.index)), df2['-logP'])
 axs[0].axvline(x=count, color='red', label=r'$P_G<$'+f'{percentile_cut*100}%\nn={count} ({round(100*count/len(df2.index),1)}% of Total)')
 axs[0].axhline(y=y_cut, color='red')
 axs[0].legend()
+axs[0].set(xlabel='Index', ylabel='-log(P)')
 
-axs[1].scatter(range(0, len(df2.index)), df2['-logP'])
-axs[1].axvline(x=count, color='red')
-axs[1].axhline(y=y_cut, color='red')
-#print(sum(df['chi_galaxy']>2))
-fig.supxlabel('Index')
-fig.supylabel(r'$-$'+'log'+'$(p)$')
+axs[1].hist(df2['-logP'], log=True)
+axs[1].set(xlabel='-log(P)', ylabel='Count')
 
 plt.savefig('code/monthly/feb2024/wk3/sdss_II.png')
-
-plt.show()
-
-
 
