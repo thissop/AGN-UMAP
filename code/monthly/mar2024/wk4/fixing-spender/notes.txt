@@ -1,7 +1,0 @@
-Fixing Spender
-
-- Known: the model correctly saves observed wavelength/spectra data. 
-- Unknown: reconstructed looks really weird
-- Unkown: I don't understand rest spectrum returned by model 
-
-- Thoughts: maybe the issue is occuring as it's trying to adjust eBOSS to BOSS for SDSS to get stuff? 
