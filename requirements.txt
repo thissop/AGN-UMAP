@@ -1,6 +1,0 @@
-astroquery
-numpy
-astropy
-h5py
-pandas 
-matplotlib
