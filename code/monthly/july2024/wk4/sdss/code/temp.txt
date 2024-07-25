@@ -1,4 +1,0 @@
-url for downloading eboss spectra: https://data.sdss.org/sas/dr17/eboss/spectro/redux/v5_13_2/spectra/full/
-
-url for downloading sdss spectra: https://data.sdss.org/sas/dr17/sdss/spectro/redux/26/spectra/ 
-
