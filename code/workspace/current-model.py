@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import os
 from scipy.ndimage import gaussian_filter1d
+import tensorflow_probability as tfp 
 
 def build_encoder(input_shape, latent_dim):
     input_layer = Input(shape=input_shape)
@@ -46,82 +47,59 @@ def build_decoder(latent_dim, output_dim, rest_range, observed_range, observed_r
     latent_input = Input(shape=(latent_dim,), name='latent_input')
     z_input = Input(shape=(1,), name='z')  # Scalar input for z
     
-    # Step 1: Fully Connected Layers to generate rest frame representation
-    x = Dense(64)(latent_input)
-    x = PReLU()(x)    
-    x = Dense(256)(x)
-    x = PReLU()(x)
-    x = Dense(1024)(x)
-    x = PReLU()(x)
+    x = Dense(64)(latent_input) 
+    x = PReLU()(x)     
+    x = Dense(256)(x) 
+    x = PReLU()(x) 
+    x = Dense(1024)(x) 
+    x = PReLU()(x) 
 
-    # Generate rest frame grid
-    min_rest_x, max_rest_x = rest_range
-    rest_length = int((max_rest_x - min_rest_x) / observed_resolution * upsample_factor)
-    rest_x = tf.linspace(min_rest_x, max_rest_x, rest_length)
+    # Generate rest frame grid 
+
+    min_rest_x, max_rest_x = rest_range 
+    rest_length = int((max_rest_x - min_rest_x) / observed_resolution * upsample_factor) 
+    rest_x = tf.linspace(min_rest_x, max_rest_x, rest_length) 
+
+    rest_x_redshifted = rest_x * (1+z_input)
+
+    print(f'Rest Length: {rest_length}; Min X: {min_rest_x}; Max X: {max_rest_x}; Resolution: {(max_rest_x-min_rest_x)/rest_length}')
 
     # Upsample Layer 
-    x = Dense(rest_length)(x)
-    x = PReLU()(x)
+    x = Dense(rest_length)(x) 
+    x = PReLU()(x) 
 
-    def slice_and_downsample(inputs):
-        x, z_input = inputs
+    # Downsample with interpolation 
+    obs_x = tf.linspace(observed_range[0], observed_range[1], output_dim)
 
-        # Compute Boundary Indexes based on rest_x, observed_range, and z_input
-        z_input = tf.squeeze(z_input, axis=-1)  # Remove the extra dimension from z_input if needed
-        min_rest_obs = observed_range[0] / (1 + z_input)
-        max_rest_obs = observed_range[1] / (1 + z_input)
+    # Interpolate at the points defined by obs_x
+    interpolated_output = tfp.math.interp_regular_1d_grid(
+        obs_x,
+        x_ref_min=observed_range[0], 
+        x_ref_max=observed_range[1],
+        y_ref=x,  # the values from the upsampled layer
+        axis=-1
+    )
+    
+    # Return interpolated output
+    return Model([latent_input, z_input], interpolated_output, name='decoder')
 
-        # Broadcast rest_x to match the batch size (the first dimension of x)
-        rest_x_broadcasted = tf.broadcast_to(rest_x, [tf.shape(x)[0], rest_length])
-
-        # Find start and stop indices using TensorFlow operations and ensure int32 type
-        start_indices = tf.cast(tf.argmin(tf.abs(rest_x_broadcasted - tf.expand_dims(min_rest_obs, axis=-1)), axis=-1), dtype=tf.int32)
-        stop_indices = tf.cast(tf.argmin(tf.abs(rest_x_broadcasted - tf.expand_dims(max_rest_obs, axis=-1)), axis=-1), dtype=tf.int32)
-
-        # Use TensorFlow's batch-wise slicing mechanism to slice based on indices
-        batch_size = tf.shape(x)[0]
-
-        # Generate index grid for each batch
-        indices = tf.range(batch_size, dtype=tf.int32)  # Ensure indices are int32
-
-        # Gather the slice from each batch using start and stop indices
-        sliced_x = tf.map_fn(
-            lambda idx: x[idx, start_indices[idx]:stop_indices[idx]:upsample_factor], 
-            indices, dtype=tf.float32
-        )
-
-        return sliced_x
-
-    # Define the output shape manually
-    def compute_output_shape(input_shapes):
-        latent_shape, z_shape = input_shapes
-        return (latent_shape[0], output_dim)
-
-    # Use Lambda layer to apply the slicing and downsampling
-    output = Lambda(slice_and_downsample, output_shape=compute_output_shape)([x, z_input])
-
-    # Reshape the final output to the desired dimensions
-    output = Reshape((output_dim, 1))(output)
-
-    return Model([latent_input, z_input], output, name='decoder')
 def build_autoencoder(input_shape, latent_dim, z_range, observed_range, observed_resolution, upsample_factor):
     spectra_input = Input(shape=input_shape, name='spectra_input')
     
-    # Building the encoder (you would define build_encoder separately)
+    # Building the encoder 
     encoder = build_encoder(input_shape, latent_dim)
     latent_space = encoder(spectra_input)
     
-    # Scalar z input for each iteration
+    # Scalar z input 
     z_input = Input(shape=(1,), name='z_input')
     
-    # Building the decoder, which now takes both latent vector and scalar z
+    # Building the decoder input  latent vector and scalar z
 
     rest_range = [observed_range[0]/(1+z_range[1]), observed_range[1]/(1+z_range[0])]
 
     decoder = build_decoder(latent_dim, input_shape[0], rest_range, observed_range, observed_resolution, upsample_factor)
     reconstructed_output = decoder([latent_space, z_input])
 
-    # Define the complete autoencoder model
     return Model(inputs=[spectra_input, z_input], outputs=reconstructed_output, name='autoencoder')
 
 observed_range = [3550, 10400]
