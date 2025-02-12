@@ -19,6 +19,8 @@ pool3 = keras.layers.MaxPool1D(pool_size=2)(conv3)
 
 # Attention layer
 
+
+
 # NEED TO ADD THIS 
 
 # Dense layer

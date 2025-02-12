@@ -96,6 +96,7 @@ def build_decoder(latent_dim, output_dim, rest_range, observed_range, observed_r
     output = Reshape((output_dim, 1))(output)
 
     return Model([latent_input, z_input], output, name='decoder')
+
 def build_autoencoder(input_shape, latent_dim, z_range, observed_range, observed_resolution, upsample_factor):
     spectra_input = Input(shape=input_shape, name='spectra_input')
     
@@ -124,4 +125,3 @@ autoencoder = build_autoencoder(input_shape=(1500, 1), latent_dim=10, z_range=z_
 
 autoencoder.compile(optimizer='adam', loss='mse')
 autoencoder.summary()
-

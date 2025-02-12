@@ -67,22 +67,21 @@ def build_decoder(latent_dim, output_dim, rest_range, observed_range, observed_r
     def slice_and_downsample(inputs):
         x, z_input = inputs
 
-        # Compute Boundary Indexes based on rest_x, observed_range, and z_input
-        z_input = tf.squeeze(z_input, axis=-1)  # Remove the extra dimension from z_input if needed
+        # compute boundary indexes
+        z_input = tf.squeeze(z_input, axis=-1) 
         min_rest_obs = observed_range[0] / (1 + z_input)
         max_rest_obs = observed_range[1] / (1 + z_input)
 
-        # Broadcast rest_x to match the batch size (the first dimension of x)
+        # broadcast to match the batch size
         rest_x_broadcasted = tf.broadcast_to(rest_x, [tf.shape(x)[0], rest_length])
 
         start_indices = tf.cast(tf.argmin(tf.abs(rest_x_broadcasted - tf.expand_dims(min_rest_obs, axis=-1)), axis=-1), dtype=tf.int32)
         stop_indices = tf.cast(tf.argmin(tf.abs(rest_x_broadcasted - tf.expand_dims(max_rest_obs, axis=-1)), axis=-1), dtype=tf.int32)
 
-        # slice based on indices and generate index grid 
+        # slice and make index grid 
         batch_size = tf.shape(x)[0]
         indices = tf.range(batch_size, dtype=tf.int32)  # Ensure indices are int32
 
-        # Gather the slice 
         sliced_x = tf.map_fn(
             lambda idx: x[idx, start_indices[idx]:stop_indices[idx]:upsample_factor], 
             indices, dtype=tf.float32
@@ -94,10 +93,9 @@ def build_decoder(latent_dim, output_dim, rest_range, observed_range, observed_r
         latent_shape, z_shape = input_shapes
         return (latent_shape[0], output_dim)
 
-    # Use Lambda layer to apply the slicing and downsampling
+    # apply the slicing and downsampling
     output = Lambda(slice_and_downsample, output_shape=compute_output_shape)([x, z_input])
 
-    # Reshape the final output 
     output = Reshape((output_dim, 1))(output)
 
     return Model([latent_input, z_input], output, name='decoder')
