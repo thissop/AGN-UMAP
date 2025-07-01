@@ -1,0 +1,82 @@
+%\documentclass[twocolumn]{aastex631}
+\documentclass[twocolumn]{aastex631} % linenumbers
+
+\usepackage{graphicx}	
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array, booktabs} 
+\usepackage{lipsum}
+%\usepackage{siunitx}
+\usepackage{gensymb}
+\newcommand{\vdag}{(v)^\dagger}
+\newcommand\aastex{AAS\TeX}
+\newcommand\latex{La\TeX}
+\usepackage{newtxtext,newtxmath}
+
+\newcommand{\lgb}[1]{{\color{blue} #1}} % edits/comments from Colin
+\newcommand{\cpf}[1]{{\color{green} #1}} % edits/comments from Colin
+
+\begin{document}
+
+\title{A Streamlined Autoencoder Architecture for Quasar Spectra: Adapting Spender's AGN Model for QSOs}
+\correspondingauthor{Thaddaeus Kiker}
+\email{tjk2147@columbia.edu}
+
+\author[0000-0002-2363-2487]{Thaddaeus Kiker}
+\affiliation{Department of Astronomy, Columbia University, New York, NY 10027, USA}
+\affiliation{Earth Science Division, NASA Goddard Space Flight Center, Greenbelt, MD, USA}
+
+\author[]{James Steiner}
+\affiliation{}
+
+
+\author{Cecelia Garraffo}
+\affiliation{}
+
+
+\begin{abstract} % word limit: 250 words
+We present a streamlined autoencoder architecture for the analysis and dimensionality reduction of quasar (QSO) spectra, inspired by the Spender team's recent advances in modeling active galactic nuclei (AGN) spectra. Our approach adapts the Spender model's rest-frame aware design to the QSO regime, introducing a simplified, efficient neural network that leverages both convolutional and fully connected layers. We demonstrate the model's ability to reconstruct observed spectra and extract meaningful latent representations, with potential applications in clustering, anomaly detection, and physical parameter inference. We discuss the architecture, training procedure, and initial results, and provide open-source code and figures to facilitate further research. This work highlights the value of cross-pollination between AGN and QSO machine learning approaches.
+\end{abstract}
+
+\keywords{quasars: general --- methods: data analysis --- techniques: spectroscopic --- machine learning}
+
+\section{Introduction} \label{sec:intro}
+Quasars (QSOs) are among the most luminous and distant objects in the universe, with spectra that encode information about accretion physics, black hole growth, and cosmic evolution. The analysis of large QSO spectral datasets, such as those from SDSS, increasingly relies on machine learning (ML) techniques for dimensionality reduction, clustering, and anomaly detection. Recent work by the Spender team has demonstrated the power of autoencoder architectures for AGN spectra, particularly through the use of rest-frame aware models that disentangle redshift and intrinsic spectral features \citep{spender2022}. Motivated by these advances, we present a streamlined autoencoder architecture tailored for QSO spectra, designed to be efficient, interpretable, and extensible for downstream scientific tasks.
+
+\section{Observations} \label{sec:obs}
+Our dataset consists of QSO spectra drawn from the SDSS archive, preprocessed to cover the observed wavelength range 3600--10300~\AA\ and redshift range $1.5 < z < 2.2$. Each spectrum is normalized in the rest-frame 2000--2500~\AA\ window, following the conventions established in prior AGN work. Data loading and preprocessing scripts are available in the project repository. Figure~\ref{fig:architecture} shows the architecture of our autoencoder model.
+
+\begin{figure*}[ht!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../autoencoder_architecture.png}
+    \caption{Schematic of the streamlined autoencoder architecture for QSO spectra. The model consists of convolutional layers for feature extraction, followed by dense layers to produce a compact latent representation. The decoder reconstructs the observed spectrum, conditioned on redshift.}
+    \label{fig:architecture}
+\end{figure*}
+
+\section{Analysis} \label{sec:analysis}
+Our autoencoder architecture is inspired by Spender's approach to AGN spectra, but is simplified for the QSO use case. The encoder consists of three 1D convolutional layers (kernel sizes 5, 11, 21; filters 128, 256, 512) with PReLU activations and max pooling, followed by dense layers (256, 128, 64 units) and a 10-dimensional latent space. The decoder reconstructs the rest-frame spectrum, which is then transformed back to the observed frame using the input redshift. Training uses a combination of fidelity, similarity, and consistency losses, as described in Section~\ref{sec:analysis}. The model is implemented in TensorFlow, with code and training scripts provided in the repository. Figure~\ref{fig:loss} shows the training and validation loss curves.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.48\textwidth]{../output.png}
+    \caption{Training and validation loss curves for the autoencoder model. The model converges rapidly, with validation loss tracking the training loss, indicating good generalization.}
+    \label{fig:loss}
+\end{figure}
+
+\section{Discussion}\label{sec:disc}
+The streamlined autoencoder achieves high-fidelity reconstructions of QSO spectra, with latent spaces that are amenable to clustering and further analysis. By conditioning the decoder on redshift, the model separates intrinsic spectral features from cosmological effects, following the philosophy of Spender's AGN model. Our approach is computationally efficient and can be extended to larger datasets or more complex architectures. Future work will explore the use of the latent space for QSO classification, outlier detection, and physical parameter inference. We encourage the community to build on this framework and to compare results across AGN and QSO domains.
+
+\section{Conclusion} \label{sec:conc}
+\begin{enumerate}
+    \item We present a streamlined, rest-frame aware autoencoder for QSO spectra, inspired by Spender's AGN work.
+    \item The model efficiently reconstructs observed spectra and produces interpretable latent representations.
+    \item Our open-source code and figures are available for community use and extension.
+    \item This work demonstrates the value of adapting AGN ML techniques to the QSO regime, and sets the stage for further cross-domain research.
+\end{enumerate}
+
+
+\newpage
+\bibliography{bibliography}{}
+\bibliographystyle{aasjournal}
+
+\end{document}
